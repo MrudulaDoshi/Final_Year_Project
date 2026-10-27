@@ -1,30 +1,11 @@
-# UWB Hospital Indoor Navigation — Python simulation API
+# UWB Hospital Navigation Flutter app
 
-This backend models the provided hospital map and its supplied walkable connections. UWB ranges are simulated in software; this does not connect to physical UWB anchors or tags.
+This Flutter app displays the supplied map, node/door/anchor markers and route returned by the Flask API.
 
-## 1. Create environment and install
-Windows PowerShell:
-```powershell
-cd UWB_Hospital_Navigation_New
-py -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-```
+## Run on Android Emulator
+1. Start the Python backend first (instructions in `../UWB_Hospital_Navigation_New/README.md`).
+2. In this folder run `flutter pub get`.
+3. Run `flutter run`.
+4. The Android emulator uses `http://10.0.2.2:5000` to reach Flask running on your computer.
 
-## 2. Run server
-```powershell
-python app.py
-```
-The API runs on port 5000. Check `http://127.0.0.1:5000/api/health` in your browser. For Android Emulator, Flutter uses `http://10.0.2.2:5000`.
-
-## Endpoints
-- `GET /api/health`
-- `GET /api/map`
-- `GET /api/rooms`
-- `GET /api/route?start=N1&destination=ICU`
-- `POST /api/simulate` JSON: `{"node":"N1","noise_std":0.08,"seed":1}`
-- `POST /api/track` JSON: `{"tag_id":"PATIENT-001","node":"N1"}`
-- `GET /api/track/PATIENT-001`
-- Accuracy test: `python uwb_accuracy_test.py`
-
-Distances and room dimensions are map-coordinate units, not metres. The supplied graph is used exactly as listed; no missing connections are silently added.
+For a real Android phone, connect phone and computer to the same Wi-Fi and change `apiBase` in `lib/main.dart` to the computer's LAN IPv4 address. Allow port 5000 through the computer firewall if prompted.
